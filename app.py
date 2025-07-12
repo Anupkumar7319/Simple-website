@@ -7,6 +7,15 @@ app = Flask(__name__)
 
 # Home route – show form + video list
 @app.route('/', methods=['GET', 'POST'])
+
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
+    
 def index():
     db = get_db()
     videos = list(db.videos.find().sort('_id', -1))  # Latest first
