@@ -41,3 +41,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 MONGO_URI=your_mongodb_connection_string
 MONGO_DB_NAME=video_links_app
+MIT ©️ 2025 ANUP KUMAR
+---
+
+✅ Is README se koi bhi developer ya user aapka project **samajh bhi sakta hai aur chala bhi sakta hai**, chahe Render pe ho ya local machine par.
