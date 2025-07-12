@@ -5,17 +5,8 @@ from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
-# Home route – show form + video list
+# ✅ Home route – show form + video list
 @app.route('/', methods=['GET', 'POST'])
-
-@app.route("/privacy")
-def privacy():
-    return render_template("privacy.html")
-
-@app.route("/terms")
-def terms():
-    return render_template("terms.html")
-    
 def index():
     db = get_db()
     videos = list(db.videos.find().sort('_id', -1))  # Latest first
@@ -33,7 +24,17 @@ def index():
 
     return render_template('index.html', videos=videos)
 
-# Optional: delete a video
+# ✅ Privacy page
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+# ✅ Terms page
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
+
+# ✅ Delete a video
 @app.route('/delete/<video_id>')
 def delete(video_id):
     db = get_db()
