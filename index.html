@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🎥 Video Link Embedder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Submit Video Link</h1>
+        <form method="POST">
+            <input type="url" name="video_url" placeholder="Paste any video URL..." required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <h2>📺 Posted Videos</h2>
+        {% if videos %}
+            <div class="video-list">
+                {% for video in videos %}
+                    <div class="video-card">
+                        <img src="{{ video.thumbnail }}" alt="Thumbnail">
+                        <h3>{{ video.title }}</h3>
+                        <iframe src="{{ video.url }}" frameborder="0" allowfullscreen></iframe>
+                        <a href="/delete/{{ video._id }}" class="delete-btn">Delete</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No videos submitted yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
