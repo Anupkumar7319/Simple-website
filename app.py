@@ -6,15 +6,19 @@ from dotenv import load_dotenv
 from utils import get_video_metadata
 import validators
 
+# Load environment variables
 load_dotenv()
+
+# Flask app initialization
 app = Flask(__name__)
 
-# MongoDB Connection (Atlas or Local)
+# MongoDB Connection
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
 client = MongoClient(MONGO_URI)
 db = client['desi_hamster']
 video_collection = db['videos']
 
+# Home route for viewing & submitting videos
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -31,9 +35,10 @@ def index():
 
     videos = list(video_collection.find())
     for v in videos:
-        v['_id'] = str(v['_id'])
+        v['_id'] = str(v['_id'])  # Convert ObjectId to string for template use
     return render_template("index.html", videos=videos)
 
+# Delete video route
 @app.route("/delete/<video_id>")
 def delete(video_id):
     try:
@@ -42,6 +47,7 @@ def delete(video_id):
         pass
     return redirect(url_for("index"))
 
+# Static content routes
 @app.route("/privacy")
 def privacy():
     return render_template("privacy.html")
@@ -62,5 +68,11 @@ def dmca():
 def contact():
     return render_template("contact.html")
 
+# Error handler (optional for debugging 500)
+@app.errorhandler(500)
+def internal_error(error):
+    return f"500 Internal Server Error: {error}", 500
+
+# Run app
 if __name__ == "__main__":
     app.run(debug=True)
